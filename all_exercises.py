@@ -1,3 +1,4 @@
+# coding=utf-8
 import sys
 
 
@@ -43,7 +44,7 @@ def newton(values, pkts):
     if pkts > 2:
         results = []
         datamatrix = []
-        for i in range(pkts):
+        for _ in range(pkts):
             datamatrix.append([0] * pkts)
         datamatrix[0][0] = values[1] - values[0]
         results.append(datamatrix[0][0])
@@ -57,14 +58,30 @@ def newton(values, pkts):
                     results.append(datamatrix[i][j])
         wzor = "N{}(x) = {}".format(pkts, values[0])
         for i in range(pkts-1):
-            if results[i] < 0:
-                wzor += str(results[i])
+            if results[i] == 0:
+                pass
             else:
-                wzor += "+" + str(results[i])
-            for j in range(i+1):
-                wzor += "(x-{})".format(j)
-            if i == pkts-2:
-                break
+                if results[i] == 1:
+                    wzor += "+" + str(results[i])
+                    for j in range(i + 1):
+                        wzor += "(x-{})".format(j)
+                    if i == pkts - 2:
+                        break
+                elif results[i] == -1:
+                    wzor += str(results[i])
+                    for j in range(i + 1):
+                        wzor += "(x-{})".format(j)
+                    if i == pkts - 2:
+                        break
+                else:
+                    if results[i] < 0:
+                        wzor += str(results[i])
+                    else:
+                        wzor += "+" + str(results[i])
+                    for j in range(i+1):
+                        wzor += "(x-{})".format(j)
+                    if i == pkts-2:
+                        break
         return wzor+"\n"
     else:
         return "Wprowadzono niewłasciwe dane"
